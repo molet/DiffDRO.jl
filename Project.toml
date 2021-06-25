@@ -1,0 +1,8 @@
+name = "DiffDRO"
+uuid = "1edde4c1-029f-477b-be29-ae2226f2ba99"
+authors = ["Letif Mones"]
+version = "0.1.0"
+
+[deps]
+Conda = "8f4d0f93-b110-5947-807f-2305c1781a2d"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
