@@ -16,5 +16,8 @@ using Test
 Pkg.add(url="https://github.com/andrewrosemberg/PortfolioOpt.jl.git")
 using PortfolioOpt
 
-include("data.jl")
-include("dro.jl")
+@testset "DiffDRO" begin
+    include("data.jl")
+    include("dro.jl")
+    include("obj.jl")
+end

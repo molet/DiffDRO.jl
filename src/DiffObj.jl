@@ -6,6 +6,7 @@ class utility():
         self.po_array = po_array
         self.samples_array = torch.tensor(samples_array, dtype=torch.float64)
         self.objective = objective
+        self.n = torch.tensor(len(po_array), dtype=torch.float64)
 
     def value(self, params):
         params_ = torch.tensor(params, dtype=torch.float64, requires_grad=True)
@@ -13,7 +14,8 @@ class utility():
         v = torch.zeros(1)
         for po, samples in zip(self.po_array, self.samples_array):
             w = po(params_)
-            v += self.objective(w, samples)
+            v += self.objective.value(w, samples)
+        v /= self.n
         return np.array(v.data, dtype=np.float64)
 
     def grad(self, params):
@@ -22,7 +24,8 @@ class utility():
         v = torch.zeros(1)
         for po, samples in zip(self.po_array, self.samples_array):
             w = po(params_)
-            v += self.objective(w, samples)
+            v += self.objective.value(w, samples)
+        v /= self.n
         v.backward()
         return np.array(params_.grad, dtype=np.float64)
 """
@@ -30,25 +33,37 @@ class utility():
 utility = py"utility"
 
 py"""
-def expected_return(w, samples):
-    r = samples @ w
-    return torch.mean(r)
+class expected_return():
+    def __init__(self):
+        return
+
+    def value(self, w, samples):
+        r = samples @ w
+        return torch.mean(r)
 """
 
 expected_return = py"expected_return"
 
 py"""
-def std_adjusted_expected_return(w, samples, risk_aversion):
-    r = samples @ w
-    return torch.mean(r) - risk_aversion * torch.std(r)
+class std_adjusted_expected_return():
+    def __init__(self, risk_aversion):
+        self.risk_aversion = torch.tensor(risk_aversion, dtype=torch.float64)
+
+    def value(self, w, samples):
+        r = samples @ w
+        return torch.mean(r) - self.risk_aversion * torch.std(r)
 """
 
 std_adjusted_expected_return = py"std_adjusted_expected_return"
 
 py"""
-def var_adjusted_expected_return(w, samples, risk_aversion):
-    r = samples @ w
-    return torch.mean(r) - risk_aversion * torch.var(r)
+class var_adjusted_expected_return():
+    def __init__(self, risk_aversion):
+        self.risk_aversion = torch.tensor(risk_aversion, dtype=torch.float64)
+
+    def value(self, w, samples):
+        r = samples @ w
+        return torch.mean(r) - self.risk_aversion * torch.var(r)
 """
 
 var_adjusted_expected_return = py"var_adjusted_expected_return"

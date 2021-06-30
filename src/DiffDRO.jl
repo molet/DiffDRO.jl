@@ -7,7 +7,11 @@ using PyCall
 export DiffBasicWeightConvexSet,
     DiffBertsimas,
     DiffBenTal,
-    DiffDelage
+    DiffDelage,
+    utility,
+    expected_return,
+    std_adjusted_expected_return,
+    var_adjusted_expected_return
 
 Conda.add("pip")
 
