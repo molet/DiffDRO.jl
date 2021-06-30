@@ -3,6 +3,8 @@
     N = 15
     lookback = 30
 
+    financial_data = get_financial_data(D=D)
+
     lower_bound = 0.0
     upper_bound = 25.0
     wealth = 100.0

@@ -1,6 +1,8 @@
 @testset "DRO models" begin
     D = 10
 
+    financial_data = get_financial_data(D=D)
+
     μ = mean(Matrix(financial_data[!, 1:D]), dims=1)[:]
     Σ = cov(Matrix(financial_data[!, 1:D]), dims=1)
     sqrtΣ = Matrix(cholesky(Σ).U)

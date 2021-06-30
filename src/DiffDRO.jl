@@ -34,4 +34,6 @@ include("DiffBenTal.jl")
 include("DiffDelage.jl")
 include("DiffObj.jl")
 
+include("test_utils.jl")
+
 end
