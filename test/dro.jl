@@ -104,6 +104,6 @@
 
         w_diff_dro = DiffDelage(D, weights, constraints, μ, sqrtΣ).get_w([γ1, γ2]).data.numpy()
 
-        @test w_po_opt ≈ w_diff_dro atol=0.003
+        @test w_po_opt ≈ w_diff_dro atol=0.01
     end
 end
