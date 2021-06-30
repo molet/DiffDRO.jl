@@ -81,6 +81,7 @@ end
 # construct ultimate utility function to optimize
 utility_function = utility(POs, samples, expected_return())
 
+# optimize utility function wrt. PO parameters
 function f(params::Vector{Float64})
     return utility_function.value(params)[1]
 end
@@ -97,6 +98,7 @@ result = Optim.maximize(
 	Optim.Options(g_tol = 1.0e-2)
 )
 
+# check convergence
 println(norm(utility_function.grad(vcat(Δ_init, Γ_init))))  # ≈ 48.88
 println(norm(utility_function.grad(result.res.minimizer)))  # ≈ 0.003
 ```
