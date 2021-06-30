@@ -8,13 +8,6 @@
     wealth = 100.0
     max_risk = 500.0
 
-    solver = optimizer_with_attributes(
-        SCS.Optimizer,
-        "eps" => 1.0e-5,
-        "max_iters" => 20000,
-        "verbose" => false
-    )
-
     Δ_init = ones(D) 
     Γ_init = 1.0
 
@@ -53,7 +46,7 @@
         storage[:] .= utility_function.grad(params)
     end
 
-    results = Optim.maximize(
+    result = Optim.maximize(
         f,
         g!,
         vcat(Δ_init, Γ_init),
@@ -69,5 +62,5 @@
         ),
     )
 
-    @test norm(utility_function.grad(vcat(Δ_init, Γ_init))) > norm(utility_function.grad(results.res.minimizer)) 
+    @test norm(utility_function.grad(vcat(Δ_init, Γ_init))) > norm(utility_function.grad(result.res.minimizer)) 
 end
