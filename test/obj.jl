@@ -18,7 +18,7 @@
     samples = []
 
     for n = 1:N
-        d = Matrix(financial_data[n:N+n-1, 1:D])
+        d = Matrix(financial_data[n:lookback+n-1, 1:D])
         push!(μs, mean(Matrix(d), dims=1)[:])
         push!(sqrtΣs, Matrix(cholesky(cov(Matrix(d), dims=1)).U))
         push!(samples, Vector(financial_data[N+n, 1:D]))
