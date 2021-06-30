@@ -1,5 +1,18 @@
 py"""
 class DiffDelage(torch.nn.Module):
+    '''
+    DiffDelage
+
+Differentiable Delage model.
+
+Atributes:
+- `D::Int`: dimension (i.e. number of assets)
+- `w::PyObject`: differentiable weights
+- `c::Vector{PyObject}`: convex constraints on weights
+- `μ::Array{Float64,1}`: predicted mean vector
+- `sqrtΣ::Array{Float64,2}`: predicted upper triangular Cholesky factor of covariance matrix
+- `solver_args::Dict=Dict("use_indirect" => true, "eps" => 1e-5, "max_iters" => 20000}`: solver arguments
+    '''
     def __init__(
         self,
         D,
@@ -50,17 +63,4 @@ class DiffDelage(torch.nn.Module):
         return params_[1] * torch.sum(Σ_ * Q_[0:D, 0:D]) - torch.dot(μ_, Q_[0:D, 0:D] @ μ_) + Q_[D, D] + torch.sum(Σ_ * P_[0:D, 0:D]) - 2 * μ_.T @ P_[D, 0:D] + params_[0] * P_[D, D]
 """
 
-"""
-    DiffDelage
-
-Differentiable Delage model.
-
-Atributes:
-- `D::Int`: dimension (i.e. number of assets)
-- `w::PyObject`: differentiable weights
-- `c::Vector{PyObject}`: convex constraints on weights
-- `μ::Array{Float64,1}`: predicted mean vector
-- `sqrtΣ::Array{Float64,2}`: predicted upper triangular Cholesky factor of covariance matrix
-- `solver_args::Dict=Dict("use_indirect" => true, "eps" => 1e-5, "max_iters" => 20000}`: solver arguments
-"""
 DiffDelage = py"DiffDelage"

@@ -1,5 +1,18 @@
 py"""
 class DiffBenTal(torch.nn.Module):
+    '''
+    DiffBenTal
+
+Differentiable BenTal model.
+
+Atributes:
+- `D::Int`: dimension (i.e. number of assets)
+- `w::PyObject`: differentiable weights
+- `c::Vector{PyObject}`: convex constraints on weights
+- `μ::Array{Float64,1}`: predicted mean vector
+- `sqrtΣ::Array{Float64,2}`: predicted upper triangular Cholesky factor of covariance matrix
+- `solver_args::Dict=Dict("use_indirect" => true, "eps" => 1e-5, "max_iters" => 20000}`: solver arguments
+    '''
     def __init__(
         self,
         D,
@@ -54,17 +67,4 @@ class DiffBenTal(torch.nn.Module):
         return μ_.T @ w_ - θ_ * params_[0]
 """
 
-"""
-    DiffBenTal
-
-Differentiable BenTal model.
-
-Atributes:
-- `D::Int`: dimension (i.e. number of assets)
-- `w::PyObject`: differentiable weights
-- `c::Vector{PyObject}`: convex constraints on weights
-- `μ::Array{Float64,1}`: predicted mean vector
-- `sqrtΣ::Array{Float64,2}`: predicted upper triangular Cholesky factor of covariance matrix
-- `solver_args::Dict=Dict("use_indirect" => true, "eps" => 1e-5, "max_iters" => 20000}`: solver arguments
-"""
 DiffBenTal = py"DiffBenTal"

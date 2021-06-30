@@ -1,5 +1,15 @@
 py"""
 class utility():
+    '''
+    utility                                                                                  
+                                                                                             
+Utility function to optimize.                                                                
+                                                                                             
+Atributes:                                                                                   
+- `po_array::Vector{PyObject}`: array of PO models                                           
+- `samples_array::Vector`: array of samples                                                  
+- `objective::PyObject`: objective function
+    '''
     def __init__(self, po_array, samples_array, objective):
         if len(po_array) is not len(samples_array):
             raise ValueError('Lenght of  po_array and samples_array must be the same.')
@@ -30,20 +40,17 @@ class utility():
         return np.array(params_.grad, dtype=np.float64)
 """
 
-"""
-    utility
-
-Utility function to optimize.
-
-Atributes:
-- `po_array::Vector{PyObject}`: array of PO models
-- `samples_array::Vector`: array of samples
-- `objective::PyObject`: objective function
-"""
 utility = py"utility"
 
 py"""
 class expected_return():
+    '''
+    expected_return                                                                          
+                                                                                             
+Expected return objective.                                                                   
+                                                                                             
+Atributes: n.a.
+    '''
     def __init__(self):
         return
 
@@ -52,17 +59,18 @@ class expected_return():
         return torch.mean(r)
 """
 
-"""
-    expected_return
-
-Expected return objective.
-
-Atributes: n.a. 
-"""
 expected_return = py"expected_return"
 
 py"""
 class std_adjusted_expected_return():
+    '''
+    std_adjusted_expected_return                                                             
+                                                                                             
+Std adjusted expected return objective.                                                      
+                                                                                             
+Atributes:                                                                                   
+- `risk_aversion::Float64`: risk aversion parameter
+    '''
     def __init__(self, risk_aversion):
         self.risk_aversion = torch.tensor(risk_aversion, dtype=torch.float64)
 
@@ -71,18 +79,18 @@ class std_adjusted_expected_return():
         return torch.mean(r) - self.risk_aversion * torch.std(r)
 """
 
-"""
-    std_adjusted_expected_return
-
-Std adjusted expected return objective.
-
-Atributes:
-- `risk_aversion::Float64`: risk aversion parameter
-"""
 std_adjusted_expected_return = py"std_adjusted_expected_return"
 
 py"""
 class var_adjusted_expected_return():
+    '''
+    var_adjusted_expected_return                                                             
+                                                                                             
+Var adjusted expected return objective.                                                      
+                                                                                             
+Atributes:                                                                                   
+- `risk_aversion::Float64`: risk aversion parameter
+    '''
     def __init__(self, risk_aversion):
         self.risk_aversion = torch.tensor(risk_aversion, dtype=torch.float64)
 
@@ -91,12 +99,4 @@ class var_adjusted_expected_return():
         return torch.mean(r) - self.risk_aversion * torch.var(r)
 """
 
-"""
-    var_adjusted_expected_return
-
-Var adjusted expected return objective.
-
-Atributes:
-- `risk_aversion::Float64`: risk aversion parameter
-"""
 var_adjusted_expected_return = py"var_adjusted_expected_return"
