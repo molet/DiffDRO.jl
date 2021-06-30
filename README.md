@@ -59,7 +59,7 @@ for n = 1:N
     d = Matrix(financial_data[n:lookback+n-1, 1:D])
     push!(μs, mean(Matrix(d), dims=1)[:])
     push!(sqrtΣs, Matrix(cholesky(cov(Matrix(d), dims=1)).U))
-    push!(samples, Vector(financial_data[N+n, 1:D]))
+    push!(samples, Vector(financial_data[lookback+n, 1:D]))
 end
 
 # construct differenctiable Bertsimas models for each training day
@@ -99,6 +99,6 @@ result = Optim.maximize(
 )
 
 # check convergence
-println(norm(utility_function.grad(vcat(Δ_init, Γ_init))))  # ≈ 49.469
-println(norm(utility_function.grad(result.res.minimizer)))  # ≈ 0.0013
+println(norm(utility_function.grad(vcat(Δ_init, Γ_init))))  # ≈ 43.15
+println(norm(utility_function.grad(result.res.minimizer)))  # ≈ 0.001
 ```
