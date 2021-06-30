@@ -36,23 +36,23 @@ using LineSearches
 using Optim
 using Statistics
 
-D = 5			     # number of assets
-N = 15			     # number of training days
-lookback = 30	     # number of lookback days
+D = 5				# number of assets
+N = 15				# number of training days
+lookback = 30		# number of lookback days
 
-lower_bound = 0.0    # lower bounds of weights
-upper_bound = 25.0	 # upper bounds of weights
-wealth = 100.0		 # total wealth to invest
-max_risk = 500.0	 # maximum risk (variance)
+lower_bound = 0.0	# lower bounds of weights
+upper_bound = 25.0	# upper bounds of weights
+wealth = 100.0		# total wealth to invest
+max_risk = 500.0	# maximum risk (variance)
 
 # initital parameters of Bertsimas model
 Δ_init = ones(D)
 Γ_init = 1.0
 
 # distribution parameters for each training day
-μs = []				 # mean vectors
-sqrtΣs = []			 # cholesky decomposition of covariance matrices
-samples = []		 # true values of prices at each training day
+μs = []				# mean vectors
+sqrtΣs = []			# cholesky decomposition of covariance matrices
+samples = []		# true values of prices at each training day
 
 # compute multivariate normal distributions based on sample mean and cov
 for n = 1:N
